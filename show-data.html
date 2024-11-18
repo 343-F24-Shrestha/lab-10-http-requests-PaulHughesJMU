@@ -28,28 +28,26 @@
     <div class="container">
         <h1>Show me the Data</h1>
         <div>
-            <h3><Replace Title 1></h3>
-            <button onclick="fetchData(1)">Display Data</button>
-            <div id="output1" class="output">No data fetched yet.</div>
-        </div>
-        <div>
-            <h3><Replace Title 2></h3>
-            <button onclick="fetchData(2)">Display Data</button>
-            <div id="output2" class="output">No data fetched yet.</div>
-        </div>
-        <div>
-            <h3><Replace Title 2></h3>
-            <button onclick="fetchData(3)">Display Data</button>
-            <div id="output3" class="output">No data fetched yet.</div>
+            <h3>Gender Prediction</h3>
+            <input type="text" id="nameInput" placeholder="Enter a name">
+            <button type="button" onclick="fetchData()">Submit</button>
+            <div id="output" class="output">No data fetched yet.</div>
         </div>
     </div>
 
     <script>
+        async function fetchData() {
+            const name = document.getElementById("nameInput").value.trim();
+            const output = document.getElementById("output");
+    
+            const response = await fetch(`https://api.genderize.io/?name=${name}`);
+            if (!response.ok) {
+                throw new Error(`API request failed with status ${response.status}`);
+            }
 
-        async function fetchData(site) {
-            // You can make it work!
+            const data = await response.json();
+            output.textContent = `Name: ${data.name}, Gender: ${data.gender}, Probability: ${data.probability}, Total Count: ${data.count}`;
         }
-           
     </script>
 </body>
 </html>
